@@ -1,15 +1,51 @@
-# Hackathons
+# Quantum Chemistry: Universality of Givens Rotations (QHack 2022)
 
-Solutions to Past Hackathons, solved by members of QC @ IITI
+## Overview
+This repository contains a solution to the **Quantum Chemistry – Universality of Givens Rotations** coding challenge from **QHack 2022**.
 
-## Adding a Solution
+Givens rotations are particle-conserving unitaries widely used in quantum chemistry. In this challenge, the goal is to compute the rotation angles required to prepare a specific six-qubit quantum state using a sequence of Givens rotations, starting from a given ground state.
 
-To add a solution, fork the repository and add your code. Once your changes are done, create a pull-request targeting the `main` branch. 
+---
 
-Your submission must include code and a brief explanation in a `README.md` file. For example, if you solved Games 200 from Xanadu QHack 2022, you can create a pull request that adds `QHack2022/Games200/README.md` and `QHack2022/Games200/solution.py`. 
+## Problem Statement
+Given a six-qubit quantum state of the form:
 
-> [!IMPORTANT]
-> Do not include jupyter notebooks. If the hackathon requires you to work with notebooks, solve the questions first, validate them, then copy-and-paste the code into your fork.
+|ψ⟩ = a|110000⟩ + b|001100⟩ + c|000011⟩ + d|100100⟩
 
-> [!TIP]
-> Check the repository for folders before creating your PRs to help avoid clutter.
+starting from the ground state |110000⟩, determine the three Givens rotation angles  
+**θ₁, θ₂, θ₃** required to prepare |ψ⟩ using the circuit described in the challenge.
+
+### Constraints
+- The coefficients `a, b, c, d` are **real and normalized**
+- `a > 0`
+- The angles θ₁, θ₂, θ₃ must lie in the interval **[−π, π)**
+- Angles must be returned **in the order they appear in the circuit**
+
+---
+
+## Approach
+The solution analytically computes the required angles using trigonometric relationships derived from the amplitudes of the target state:
+
+- θ₂ = −2 · arctan(c / b)
+- θ₃ = −2 · arctan(d / a)
+- θ₁ = 2 · arcsin(c / sin(θ₂ / 2))
+
+These angles uniquely parametrize the sequence of Givens rotations needed to generate the desired state.
+
+---
+
+## File Description
+- `qchem300.py`  
+  Implements the `givens_rotations` function and follows the exact input/output format required by the QHack evaluation system.
+
+---
+
+## Function Specification
+```python
+givens_rotations(a, b, c, d)
+```
+---
+## BY:
+-Anushri Maheshwari
+-Faaz Mohammed
+-Vibha Patel
